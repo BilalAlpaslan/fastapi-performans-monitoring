@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -10,8 +11,8 @@ app = FastAPI()
 
 apm_config = {
     'SERVICE_NAME': 'FastAPI-ElasticAPM',
-    'SERVER_URL': 'http://localhost:8200',
-    'ENVIRONMENT': 'dev',
+    'SERVER_URL': os.environ.get('APM_SERVER_URL', 'http://localhost:8200'),
+    'ENVIRONMENT': os.environ.get('APM_ENVIRONMENT', 'development'),
     'GLOBAL_LABELS': 'platform=Platform, application=Application'
 }
 apm = make_apm_client(apm_config)
